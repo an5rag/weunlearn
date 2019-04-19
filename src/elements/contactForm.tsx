@@ -16,7 +16,7 @@ export class ContactForm extends React.Component<{}, ContactFormState> {
               name="contact"
               method="POST"
               data-netlify="true"
-              onSubmit={console.log}
+              onSubmit={() => this.setState({formSubmitted: true})}
             >
               <input type="hidden" name="form-name" value="contact" />
               <FormField name="name" label="Name" />
