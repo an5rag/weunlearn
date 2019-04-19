@@ -16,17 +16,12 @@ export class ContactForm extends React.Component<{}, ContactFormState> {
               name="contact"
               method="POST"
               data-netlify="true"
-              onSubmit={() => this.setState({ formSubmitted: true })}
+              onSubmit={console.log}
             >
-              <FormField name="name" label="Name">
-                {/* <TextInput name="name" placeholder="Kiran Bedi" /> */}
-              </FormField>
-              <FormField name="email" label="Email" required>
-                {/* <TextInput name="email" placeholder="kiran@gmail.com" /> */}
-              </FormField>
-              <FormField name="message" label="Message">
-                {/* <TextInput name="message" placeholder="Your Message" /> */}
-              </FormField>
+              <input type="hidden" name="form-name" value="contact" />
+              <FormField name="name" label="Name" />
+              <FormField name="email" label="Email" required type="email" />
+              <FormField name="message" label="Message" required />
               <Box direction="row" justify="center" margin={{ top: "medium" }}>
                 <Button type="submit" primary label="Submit" />
               </Box>
@@ -36,7 +31,9 @@ export class ContactForm extends React.Component<{}, ContactFormState> {
               <Text textAlign="center">
                 <b>Thank you!</b>
               </Text>
-              <Text textAlign="center">We will get in touch with you soon.</Text>
+              <Text textAlign="center">
+                We will get in touch with you soon.
+              </Text>
             </Box>
           )
         }
