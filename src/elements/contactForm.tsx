@@ -14,6 +14,7 @@ export class ContactForm extends React.Component<{}, ContactFormState> {
           !this.state.formSubmitted ? (
             <Form
               name="contact"
+              method="POST"
               data-netlify="true"
               onSubmit={() => this.setState({ formSubmitted: true })}
             >
