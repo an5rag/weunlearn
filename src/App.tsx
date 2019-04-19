@@ -1,17 +1,17 @@
 import React, { Component } from "react";
-import "./App.css";
+import { Grommet } from "grommet/components/Grommet";
+import { grommet } from "grommet/themes";
+import { Box } from "grommet/components/Box";
 
-class App extends Component {
+export class App extends Component {
   render() {
     return (
-      <div className="App">
-        <header className="App-header">
-          <code>weunlearn.org</code>
+      <Grommet theme={grommet}>
+        <Box align="center" height="100vh" justify="center">
+          <h1>weunlearn.org</h1>
           <div>contact@weunlearn.com</div>
-        </header>
-      </div>
+        </Box>
+      </Grommet>
     );
   }
 }
-
-export default App;
