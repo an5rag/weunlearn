@@ -6,7 +6,7 @@ const SocialMedia = () => (
   <Box direction="row" gap="xxsmall" justify="center" align="center">
     <Anchor
       target="_blank"
-      href="https://www.instagram.com/theirrelevantproject"
+      href="https://www.instagram.com/weunlearn"
       icon={<Instagram color="brand" size="medium" />}
     />
     <Anchor
