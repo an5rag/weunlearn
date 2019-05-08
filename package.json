@@ -9,6 +9,7 @@
     "@types/react-dom": "^16.8.4",
     "grommet": "^2.6.6",
     "grommet-icons": "^4.2.0",
+    "moment": "^2.24.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
     "react-router-dom": "^5.0.0",
