@@ -1,20 +1,10 @@
 import { ICampaign, ICampaignBlast, Status } from "./data.types";
 
-export const mockCampaigns: ICampaign[] = [
-  {
-    id: "c-1",
-    dateCreated: new Date(Date.UTC(2019, 5, 7, 2, 20, 12)),
-    name: "Episode 1",
-    description: "First episode in Stereo",
-    blastIds: []
-  }
-];
-
 export const mockBlasts: ICampaignBlast[] = [
   {
     id: "b-1",
+    name: "sample blast 1",
     dateStarted: new Date(Date.UTC(2019, 4, 7, 4, 20, 12)),
-    campaignId: "c-1",
     sessions: [
       {
         userName: "Anurag",
@@ -28,8 +18,8 @@ export const mockBlasts: ICampaignBlast[] = [
   },
   {
     id: "b-2",
+    name: "sample blast 2",
     dateStarted: new Date(),
-    campaignId: "c-1",
     sessions: [
       {
         id: "s-1",
@@ -48,5 +38,24 @@ export const mockBlasts: ICampaignBlast[] = [
         lastCheckpoint: "NotStarted"
       }
     ]
+  }
+];
+
+export const mockCampaigns: ICampaign[] = [
+  {
+    id: "c-1",
+    dateCreated: new Date(Date.UTC(2019, 5, 7, 2, 20, 12)),
+    name: "Episode 1",
+    description: "First episode in Stereo",
+    appId: "1234",
+    blasts: [mockBlasts[0], mockBlasts[1]]
+  },
+  {
+    id: "c-2",
+    dateCreated: new Date(Date.UTC(2019, 5, 7, 2, 20, 12)),
+    name: "Episode 2",
+    description: "Second episode in Stereo",
+    blasts: [mockBlasts[0], mockBlasts[1]],
+    appId: "3456"
   }
 ];

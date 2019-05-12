@@ -3,12 +3,13 @@ export interface ICampaign {
   dateCreated: Date;
   name: string;
   description: string;
-  blastIds: string[];
+  appId: string;
+  blasts: ICampaignBlast[];
 }
 
 export interface ICampaignBlast {
   dateStarted: Date;
-  campaignId: string;
+  name: string;
   sessions: ISession[];
   id: string;
 }
@@ -29,4 +30,17 @@ export enum Status {
   "Completed",
   "Failed",
   "Missed"
+}
+
+export interface IUser {
+  id: string;
+  name: string;
+  phone: string;
+  company: string;
+}
+
+export interface IUserGroup {
+  id: string;
+  users: IUser[];
+  name: string;
 }
