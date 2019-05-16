@@ -10,9 +10,9 @@ import {
   Button
 } from "grommet";
 import moment from "moment";
-import { ISession, ICampaign, ICampaignBlast } from "./data.types";
+import { ISession, ICampaign, ICampaignBlast } from "../../data.types";
 import { Add } from "grommet-icons";
-import { LoadingImage } from "../../elements/loadingImage";
+import { LoadingImage } from "../../../../elements/loadingImage";
 
 interface DashboardProps {
   campaigns?: ICampaign[];

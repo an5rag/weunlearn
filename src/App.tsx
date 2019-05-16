@@ -6,7 +6,7 @@ import { NavHeader } from "./elements/header";
 import { Home } from "./pages/home/home";
 import { deepMerge } from "grommet/utils";
 import { Route, BrowserRouter as Router } from "react-router-dom";
-import { DashboardWithData } from "./pages/ivr-udhyam/dashboardWithData";
+import { Main } from "./pages/ivr-udhyam/main";
 
 const withColors = deepMerge(grommet, {
   global: {
@@ -28,7 +28,7 @@ export class App extends Component {
         <Router>
           <NavHeader />
           <Route exact path="/" component={Home} />
-          <Route path="/udhyam" component={DashboardWithData} />
+          <Route path="/udhyam" component={Main} />
           <Footer />
         </Router>
       </Grommet>

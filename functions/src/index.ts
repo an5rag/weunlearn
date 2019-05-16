@@ -8,6 +8,6 @@ const db = admin.firestore();
 export const helloWorld = functions.https.onRequest(
   async (request, response) => {
     const cafes = await db.collection("cafes").get();
-    response.send(cafes.docs);
+    response.send(cafes.docs.map(doc => doc.data()));
   }
 );
