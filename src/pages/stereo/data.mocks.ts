@@ -1,4 +1,4 @@
-import { ICampaign, ICampaignBlast, Status } from "./data.types";
+import { ICampaign, ICampaignBlast, Status } from "./types";
 
 export const mockBlasts: ICampaignBlast[] = [
   {

@@ -10,7 +10,7 @@ import {
   Button
 } from "grommet";
 import moment from "moment";
-import { ISession, ICampaign, ICampaignBlast } from "../../data.types";
+import { ISession, ICampaign, ICampaignBlast } from "../../types";
 import { Add } from "grommet-icons";
 import { LoadingImage } from "../../../../elements/loadingImage";
 
@@ -22,19 +22,7 @@ export class Dashboard extends React.Component<DashboardProps> {
   render = () => (
     <ResponsiveContext.Consumer>
       {size => (
-        <Box
-          direction="column"
-          pad={{ vertical: "large", horizontal: "large" }}
-          align="start"
-        >
-          <Heading
-            color="brand"
-            level="1"
-            textAlign="center"
-            style={{ alignSelf: "center" }}
-          >
-            WeUnlearn Stereo
-          </Heading>
+        <Box width="xlarge" direction="column" align="start">
           <Button
             icon={<Add />}
             label="New Campaign"

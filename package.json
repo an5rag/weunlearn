@@ -7,6 +7,7 @@
     "@types/node": "^11.13.4",
     "@types/react": "^16.8.13",
     "@types/react-dom": "^16.8.4",
+    "axios": "^0.18.0",
     "firebase": "^6.0.1",
     "grommet": "^2.6.6",
     "grommet-icons": "^4.2.0",

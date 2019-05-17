@@ -39,8 +39,13 @@ export interface IUser {
   company: string;
 }
 
+export interface UserGroupMembership {
+  userId: string;
+  groupId: string;
+}
+
 export interface IUserGroup {
   id: string;
-  users: IUser[];
   name: string;
+  description: string;
 }

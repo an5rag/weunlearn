@@ -1,7 +1,7 @@
 import React from "react";
 import { firestore } from "firebase";
 import { Dashboard } from "./dashboard";
-import { ICampaign, ICampaignBlast } from "../../data.types";
+import { ICampaign, ICampaignBlast } from "../../types";
 
 const collectionNames = {
   campaigns: "campaigns",

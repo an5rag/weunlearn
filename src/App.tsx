@@ -6,7 +6,7 @@ import { NavHeader } from "./elements/header";
 import { Home } from "./pages/home/home";
 import { deepMerge } from "grommet/utils";
 import { Route, BrowserRouter as Router } from "react-router-dom";
-import { Main } from "./pages/ivr-udhyam/main";
+import { Main } from "./pages/stereo/main";
 
 const withColors = deepMerge(grommet, {
   global: {
