@@ -10,7 +10,7 @@ import {
   ConfigurerState,
   DocumentConfigurerProps,
   PropertyType
-} from "./documentConfigurer";
+} from "../../../../elements/documentConfigurer";
 import {
   addContactGroup,
   updateContactGroup,

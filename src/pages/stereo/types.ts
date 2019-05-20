@@ -4,10 +4,10 @@ export interface ICampaign {
   name: string;
   description: string;
   appId: string;
-  blasts: ICampaignBlast[];
+  blasts: ICampaignBroadcast[];
 }
 
-export interface ICampaignBlast {
+export interface ICampaignBroadcast {
   dateStarted: Date;
   name: string;
   sessions: ISession[];

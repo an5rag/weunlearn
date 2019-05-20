@@ -10,7 +10,7 @@ import {
   Button
 } from "grommet";
 import moment from "moment";
-import { ISession, ICampaign, ICampaignBlast } from "../../types";
+import { ISession, ICampaign, ICampaignBroadcast } from "../../types";
 import { Add } from "grommet-icons";
 import { LoadingImage } from "../../../../elements/loadingImage";
 
@@ -84,7 +84,7 @@ export class Dashboard extends React.Component<DashboardProps> {
     );
   }
 
-  private renderBlast(blast: ICampaignBlast) {
+  private renderBlast(blast: ICampaignBroadcast) {
     return (
       <AccordionPanel
         label={

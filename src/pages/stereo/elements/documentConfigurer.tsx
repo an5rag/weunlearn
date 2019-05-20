@@ -1,5 +1,5 @@
 import React from "react";
-import { ActionModal } from "../../../../elements/actionModal/actionModal";
+import { ActionModal } from "./actionModal/actionModal";
 import { TextInput, FormField, Paragraph, Select } from "grommet";
 
 export enum ConfigurerState {

@@ -1,7 +1,7 @@
 import React from "react";
 import { firestore } from "firebase";
 import { Dashboard, DashboardProps } from "./dashboard";
-import { ICampaign, ICampaignBlast } from "../../types";
+import { ICampaign, ICampaignBroadcast } from "../../types";
 
 const collectionNames = {
   campaigns: "campaigns",
@@ -14,6 +14,10 @@ export class DashboardContainer extends React.Component<{}, DashboardProps> {
   constructor(props: {}) {
     super(props);
     this.db = firestore();
+    this.db
+      .collectionGroup("blasts")
+      .get()
+      .then(console.log);
   }
 
   componentDidMount() {
@@ -42,7 +46,7 @@ export class DashboardContainer extends React.Component<{}, DashboardProps> {
               dateStarted: (blastData.dateStarted as firestore.Timestamp).toDate(),
               name: blastData.name,
               sessions: []
-            } as ICampaignBlast;
+            } as ICampaignBroadcast;
           });
 
           return campaign;

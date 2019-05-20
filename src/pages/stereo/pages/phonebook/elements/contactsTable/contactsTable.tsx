@@ -9,7 +9,7 @@ import {
   DocumentConfigurerProps,
   PropertyType,
   DocumentConfigurer
-} from "../contactGroupBar/documentConfigurer";
+} from "../../../../elements/documentConfigurer";
 import {
   addContact,
   updateContact,

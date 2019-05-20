@@ -1,6 +1,6 @@
-import { ICampaign, ICampaignBlast, Status } from "./types";
+import { ICampaign, ICampaignBroadcast, Status } from "./types";
 
-export const mockBlasts: ICampaignBlast[] = [
+export const mockBlasts: ICampaignBroadcast[] = [
   {
     id: "b-1",
     name: "sample blast 1",
