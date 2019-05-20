@@ -16,7 +16,7 @@ export interface ICampaignBlast {
 
 export interface ISession {
   id: string;
-  userName: string;
+  contactId: string;
   phoneNumber: string;
   status: Status;
   duration?: number;
@@ -30,22 +30,4 @@ export enum Status {
   "Completed",
   "Failed",
   "Missed"
-}
-
-export interface IUser {
-  id: string;
-  name: string;
-  phone: string;
-  company: string;
-}
-
-export interface UserGroupMembership {
-  userId: string;
-  groupId: string;
-}
-
-export interface IUserGroup {
-  id: string;
-  name: string;
-  description: string;
 }

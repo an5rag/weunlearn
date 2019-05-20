@@ -14,7 +14,7 @@ import { ISession, ICampaign, ICampaignBlast } from "../../types";
 import { Add } from "grommet-icons";
 import { LoadingImage } from "../../../../elements/loadingImage";
 
-interface DashboardProps {
+export interface DashboardProps {
   campaigns?: ICampaign[];
 }
 
@@ -106,7 +106,7 @@ export class Dashboard extends React.Component<DashboardProps> {
               property: "name",
               header: <Text>Name</Text>,
               primary: false,
-              render: (datum: ISession) => datum.userName
+              render: (datum: ISession) => datum.contactId
             },
             {
               property: "phoneNumber",

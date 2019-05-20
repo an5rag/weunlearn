@@ -7,7 +7,7 @@ export const mockBlasts: ICampaignBlast[] = [
     dateStarted: new Date(Date.UTC(2019, 4, 7, 4, 20, 12)),
     sessions: [
       {
-        userName: "Anurag",
+        contactId: "Anurag",
         id: "s-1",
         phoneNumber: "+919339898123",
         status: Status.Completed,
@@ -23,7 +23,7 @@ export const mockBlasts: ICampaignBlast[] = [
     sessions: [
       {
         id: "s-1",
-        userName: "Meghna",
+        contactId: "Meghna",
         phoneNumber: "+919339898123",
         status: Status.Completed,
         duration: 12,
@@ -31,7 +31,7 @@ export const mockBlasts: ICampaignBlast[] = [
       },
       {
         id: "s-2",
-        userName: "Garima",
+        contactId: "Garima",
         phoneNumber: "+919339898123",
         status: Status.Failed,
         duration: 2,

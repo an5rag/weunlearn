@@ -25,12 +25,14 @@ export class App extends Component {
   render() {
     return (
       <Grommet theme={withColors}>
-        <Router>
-          <NavHeader />
-          <Route exact path="/" component={Home} />
-          <Route path="/udhyam" component={Main} />
-          <Footer />
-        </Router>
+        <div id="app-root">
+          <Router>
+            <NavHeader />
+            <Route exact path="/" component={Home} />
+            <Route path="/stereo" component={Main} />
+            <Footer />
+          </Router>
+        </div>
       </Grommet>
     );
   }

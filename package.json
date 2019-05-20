@@ -9,11 +9,12 @@
     "@types/react-dom": "^16.8.4",
     "axios": "^0.18.0",
     "firebase": "^6.0.1",
-    "grommet": "^2.6.6",
-    "grommet-icons": "^4.2.0",
+    "grommet": "2.7.0",
+    "grommet-icons": "4.2.0",
     "moment": "^2.24.0",
     "react": "^16.8.6",
     "react-dom": "^16.8.6",
+    "react-modal": "^3.8.1",
     "react-router-dom": "^5.0.0",
     "react-scripts": "2.1.8",
     "source-map-explorer": "^1.8.0",
@@ -37,6 +38,7 @@
     "not op_mini all"
   ],
   "devDependencies": {
+    "@types/react-modal": "^3.8.2",
     "@types/react-router-dom": "^4.3.2",
     "@types/styled-components": "^4.1.14"
   }

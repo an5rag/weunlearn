@@ -1,9 +1,9 @@
 import * as React from "react";
 import { Route, RouteComponentProps } from "react-router";
-import { BrowserRouter, Link } from "react-router-dom";
+import { BrowserRouter, NavLink } from "react-router-dom";
 import { DashboardContainer } from "./pages/dashboard/dashboardContainer";
-import { Users } from "./pages/users/users";
-import { Box, Heading } from "grommet";
+import { Box, Heading, Text } from "grommet";
+import { PhonebookContainer } from "./pages/phonebook/phonebookContainer";
 
 export const Main = (props: RouteComponentProps) => {
   return (
@@ -20,10 +20,23 @@ export const Main = (props: RouteComponentProps) => {
       </Box>
       <Box width="100%" direction="row" justify="center" gap={"small"}>
         <Heading level="4" color="accent-1">
-          <Link to={props.match.url}>Dashboard</Link>
+          <NavLink
+            style={{ textDecoration: "none", paddingBottom: "5px" }}
+            exact
+            activeStyle={{ borderBottom: "3px solid #ffca58" }}
+            to={props.match.url}
+          >
+            <Text color="brand">Dashboard</Text>
+          </NavLink>
         </Heading>
         <Heading level="4" color="accent-1">
-          <Link to={`${props.match.url}/users`}>Users</Link>
+          <NavLink
+            style={{ textDecoration: "none", paddingBottom: "5px" }}
+            activeStyle={{ borderBottom: "3px solid #ffca58" }}
+            to={`${props.match.url}/phonebook`}
+          >
+            <Text color="brand">Phonebook</Text>
+          </NavLink>
         </Heading>
       </Box>
 
@@ -34,7 +47,10 @@ export const Main = (props: RouteComponentProps) => {
         pad={{ vertical: "large", horizontal: "large" }}
       >
         <Route exact path={props.match.url} component={DashboardContainer} />
-        <Route path={`${props.match.url}/users`} component={Users} />
+        <Route
+          path={`${props.match.url}/phonebook`}
+          component={PhonebookContainer}
+        />
       </Box>
     </BrowserRouter>
   );

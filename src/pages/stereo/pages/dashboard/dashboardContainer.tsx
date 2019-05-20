@@ -1,6 +1,6 @@
 import React from "react";
 import { firestore } from "firebase";
-import { Dashboard } from "./dashboard";
+import { Dashboard, DashboardProps } from "./dashboard";
 import { ICampaign, ICampaignBlast } from "../../types";
 
 const collectionNames = {
@@ -9,14 +9,7 @@ const collectionNames = {
   sessions: "sessions"
 };
 
-interface DashboardContainerState {
-  campaigns: ICampaign[];
-}
-
-export class DashboardContainer extends React.Component<
-  {},
-  DashboardContainerState
-> {
+export class DashboardContainer extends React.Component<{}, DashboardProps> {
   public db: firestore.Firestore;
   constructor(props: {}) {
     super(props);
