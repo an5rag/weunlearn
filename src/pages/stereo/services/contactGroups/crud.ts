@@ -10,7 +10,7 @@ export async function getContactGroups(): Promise<IContactGroupWithID[]> {
 }
 
 export async function getContactGroup(
-  contactGroupId?: string
+  contactGroupId: string
 ): Promise<IContactGroupWithID | undefined> {
   const contactGroupsCollectionRef = getContactGroupsRef();
   const document = await contactGroupsCollectionRef.doc(contactGroupId).get();

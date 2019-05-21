@@ -4,6 +4,7 @@ import { BrowserRouter, NavLink } from "react-router-dom";
 import { Box, Heading, Text } from "grommet";
 import { PhonebookContainer } from "./pages/phonebook/phonebookContainer";
 import { Projects } from "./pages/projects/projects";
+import { ProjectContainer } from "./pages/project/projectContainer";
 
 export const Main = (props: RouteComponentProps) => {
   return (
@@ -50,6 +51,10 @@ export const Main = (props: RouteComponentProps) => {
         <Route
           path={`${props.match.url}/phonebook`}
           component={PhonebookContainer}
+        />
+        <Route
+          path={`${props.match.url}/project/:projectId`}
+          component={ProjectContainer}
         />
       </Box>
     </BrowserRouter>

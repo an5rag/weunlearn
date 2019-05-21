@@ -7,7 +7,7 @@ import {
 } from "../../services/projects/crud";
 import { IProjectWithId, IProject } from "../../services/projects/types";
 import { Box, Heading, Button } from "grommet";
-import { Add } from "grommet-icons";
+import { Add, Edit } from "grommet-icons";
 import {
   ConfigurerState,
   DocumentConfigurerProps,
@@ -15,22 +15,28 @@ import {
   DocumentConfigurer
 } from "../../elements/documentConfigurer";
 import { LoadingImage } from "../../../../elements/loadingImage";
+import { Link, RouteComponentProps } from "react-router-dom";
 
 interface ProjectsState {
   projects: IProjectWithId[];
   loading: boolean;
   configurerState: ConfigurerState;
   isConfigurerOpen: boolean;
+  projectIdToEdit: string;
 }
-export class Projects extends React.Component<{}, ProjectsState> {
+export class Projects extends React.Component<
+  RouteComponentProps,
+  ProjectsState
+> {
   private projectsSubscription: () => void;
-  constructor(props: {}) {
+  constructor(props: RouteComponentProps) {
     super(props);
     this.state = {
       projects: [],
       configurerState: ConfigurerState.Add,
       isConfigurerOpen: false,
-      loading: true
+      loading: true,
+      projectIdToEdit: ""
     };
     this.projectsSubscription = () => {};
   }
@@ -54,13 +60,7 @@ export class Projects extends React.Component<{}, ProjectsState> {
       );
     }
     return (
-      <Box
-        gap="large"
-        direction="row"
-        justify="center"
-        width="large"
-        margin="large"
-      >
+      <Box direction="row" justify="center" width="large" margin="medium" wrap>
         {this.renderProjectConfigurer()}
         {this.state.projects.map(this.renderProjectBox)}
         {this.renderNewProjectBox()}
@@ -68,24 +68,50 @@ export class Projects extends React.Component<{}, ProjectsState> {
     );
   }
 
-  private renderProjectBox(project: IProjectWithId) {
+  private renderProjectBox = (project: IProjectWithId) => {
+    const buttonStyles: React.CSSProperties = {
+      border: "none",
+      borderRadius: "0"
+    };
     return (
       <Box
         height="150px"
         width="150px"
+        background="brand"
+        margin="small"
+        key={project.id}
         align="center"
         justify="center"
-        background="brand"
       >
-        <Heading level="4">{project.name}</Heading>
+        <Link
+          to={`${this.props.match.url}/project/${project.id}`}
+          style={{
+            textDecoration: "none",
+            color: "inherit"
+          }}
+        >
+          <Heading level="4">{project.name}</Heading>
+        </Link>
+        <Button
+          style={buttonStyles}
+          icon={<Edit />}
+          onClick={() => {
+            this.setState({
+              configurerState: ConfigurerState.Edit,
+              isConfigurerOpen: true,
+              projectIdToEdit: project.id
+            });
+          }}
+        />
       </Box>
     );
-  }
+  };
 
   private renderNewProjectBox() {
     return (
       <Box
         height="150px"
+        margin="small"
         width="150px"
         align="center"
         justify="center"
@@ -95,16 +121,17 @@ export class Projects extends React.Component<{}, ProjectsState> {
           size: "small",
           style: "dashed"
         }}
+        onClick={() => {
+          this.setState({
+            configurerState: ConfigurerState.Add,
+            isConfigurerOpen: true
+          });
+        }}
+        style={{
+          cursor: "pointer"
+        }}
       >
-        <Button
-          icon={<Add />}
-          onClick={() => {
-            this.setState({
-              configurerState: ConfigurerState.Add,
-              isConfigurerOpen: true
-            });
-          }}
-        />
+        <Add />
       </Box>
     );
   }
@@ -114,14 +141,18 @@ export class Projects extends React.Component<{}, ProjectsState> {
       configurerState: this.state.configurerState,
       isOpen: this.state.isConfigurerOpen,
       onDismiss: () => this.setState({ isConfigurerOpen: false }),
+      document: this.state.projects.find(
+        project => project.id === this.state.projectIdToEdit
+      ),
 
       documentTypeName: "Project",
       onAdd: async document => {
+        document.dateCreated = new Date();
         await addProject(document);
         this.setState({ isConfigurerOpen: false });
       },
       onUpdate: async document => {
-        await updateProject("foobar", document);
+        await updateProject(this.state.projectIdToEdit, document);
         this.setState({ isConfigurerOpen: false });
       },
       onDelete: async () => {
@@ -153,6 +184,7 @@ export class Projects extends React.Component<{}, ProjectsState> {
         }
       ]
     };
+
     return (
       <DocumentConfigurer
         key={this.state.configurerState}

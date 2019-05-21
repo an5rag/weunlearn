@@ -8,13 +8,27 @@ export async function getProjects(): Promise<IProjectWithId[]> {
 }
 
 export async function getProject(
-  projectId?: string
+  projectId: string
 ): Promise<IProjectWithId | undefined> {
   const projectsCollectionRef = getProjectsRef();
   const document = await projectsCollectionRef.doc(projectId).get();
   if (document.data()) {
     return mapDocumentToProject(document as firestore.QueryDocumentSnapshot);
   }
+}
+
+export function getProjectSubscription(
+  projectId: string,
+  fn: (project?: IProjectWithId) => void
+): () => void {
+  const projectsCollectionRef = getProjectsRef();
+  return projectsCollectionRef.doc(projectId).onSnapshot(snapshot => {
+    if (snapshot.data()) {
+      fn(mapDocumentToProject(snapshot as firestore.QueryDocumentSnapshot));
+    } else {
+      fn();
+    }
+  });
 }
 
 export function getProjectsSubscription(
@@ -60,7 +74,7 @@ function mapDocumentToProject(
   return project;
 }
 
-function getProjectsRef() {
+export function getProjectsRef() {
   const db = firestore();
   return db.collection("projects");
 }
