@@ -210,14 +210,16 @@ export class ContactsTable extends React.Component<
       return this.props.contacts.find(contact => contact.id === id);
     });
     const firstCheckedDocument = checkedDocuments[0];
-    const document = firstCheckedDocument
-      ? firstCheckedDocument
-      : {
-          name: "",
-          company: "",
-          phone: "",
-          groupIds: this.props.groupId ? [this.props.groupId] : []
-        };
+    const document =
+      firstCheckedDocument &&
+      this.state.configurerState === ConfigurerState.Edit
+        ? firstCheckedDocument
+        : {
+            name: "",
+            company: "",
+            phone: "",
+            groupIds: this.props.groupId ? [this.props.groupId] : []
+          };
     const documentConfigurerProps: DocumentConfigurerProps<IContact> = {
       configurerState: this.state.configurerState,
       isOpen: this.state.isConfigurerOpen,
