@@ -141,9 +141,12 @@ export class Projects extends React.Component<
       configurerState: this.state.configurerState,
       isOpen: this.state.isConfigurerOpen,
       onDismiss: () => this.setState({ isConfigurerOpen: false }),
-      document: this.state.projects.find(
-        project => project.id === this.state.projectIdToEdit
-      ),
+      document:
+        this.state.configurerState === ConfigurerState.Edit
+          ? this.state.projects.find(
+              project => project.id === this.state.projectIdToEdit
+            )
+          : undefined,
 
       documentTypeName: "Project",
       onAdd: async document => {
@@ -187,7 +190,7 @@ export class Projects extends React.Component<
 
     return (
       <DocumentConfigurer
-        key={this.state.configurerState}
+        key={this.state.configurerState + "" + this.state.projectIdToEdit}
         {...documentConfigurerProps}
       />
     );
