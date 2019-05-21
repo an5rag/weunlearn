@@ -46,7 +46,11 @@ export class Project extends React.Component<ProjectProps, ProjectState> {
     return (
       <>
         {this.renderCampaignConfigurer(project)}
-        <Box gap="medium">
+        <Box
+          gap="medium"
+          align="start"
+          animation={{ type: "fadeIn", duration: 300 }}
+        >
           <Heading margin="0" level="2">
             {project.name}
           </Heading>
@@ -74,11 +78,13 @@ export class Project extends React.Component<ProjectProps, ProjectState> {
 
   private renderCampaigns(campaigns: ICampaignWithId[]) {
     return (
-      <Accordion multiple>
-        {campaigns.map(campaign => (
-          <Campaign campaign={campaign} />
-        ))}
-      </Accordion>
+      <Box animation={{ type: "slideDown", duration: 200 }}>
+        <Accordion multiple>
+          {campaigns.map(campaign => (
+            <Campaign campaign={campaign} />
+          ))}
+        </Accordion>
+      </Box>
     );
   }
 
