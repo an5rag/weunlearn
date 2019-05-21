@@ -298,7 +298,12 @@ export class ContactsTable extends React.Component<
     };
     return (
       <DocumentConfigurer
-        key={this.state.configurerState + "" + this.props.groupId}
+        key={
+          this.state.configurerState +
+          "" +
+          this.props.groupId +
+          this.state.checked.reduce((p, c) => p + "" + c, "")
+        }
         {...documentConfigurerProps}
       />
     );
