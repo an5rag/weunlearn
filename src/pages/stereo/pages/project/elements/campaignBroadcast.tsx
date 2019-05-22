@@ -158,7 +158,7 @@ export class CampaignBroadcast extends React.Component<
                   property: "response",
                   header: "Response",
                   primary: true,
-                  render: (datum: ISession) => datum.response
+                  render: (datum: ISession) => JSON.stringify(datum.response)
                 }
 
                 // {

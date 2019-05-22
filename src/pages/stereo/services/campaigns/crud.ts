@@ -5,7 +5,10 @@ import { getProjectsRef } from "../projects/crud";
 export async function getCampaigns(
   projectId: string
 ): Promise<ICampaignWithId[]> {
-  const campaignsCollectionRef = getCampaignsRefByProject(projectId);
+  const campaignsCollectionRef = getCampaignsRefByProject(projectId).orderBy(
+    "dateCreated",
+    "desc"
+  );
   const snapshot: firestore.QuerySnapshot = await campaignsCollectionRef.get();
   return snapshot.docs.map(mapDocumentToCampaign);
 }
@@ -26,7 +29,10 @@ export function getCampaignsSubscription(
 
   fn: (campaigns: ICampaignWithId[]) => void
 ): () => void {
-  const campaignsCollectionRef = getCampaignsRefByProject(projectId);
+  const campaignsCollectionRef = getCampaignsRefByProject(projectId).orderBy(
+    "dateCreated",
+    "desc"
+  );
   return campaignsCollectionRef.onSnapshot(snapshot => {
     fn(snapshot.docs.map(mapDocumentToCampaign));
   });

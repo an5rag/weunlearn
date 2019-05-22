@@ -11,7 +11,7 @@ export async function getSessions(
     projectId,
     campaignId,
     campaignBroadcastId
-  );
+  ).orderBy("dateCreated", "desc");
   const snapshot: firestore.QuerySnapshot = await sessionsCollectionRef.get();
   return snapshot.docs.map(mapDocumentToSession);
 }
@@ -43,7 +43,7 @@ export function getSessionsSubscription(
     projectId,
     campaignId,
     campaignBroadcastId
-  );
+  ).orderBy("dateCreated", "desc");
   return sessionsCollectionRef.onSnapshot(snapshot => {
     fn(snapshot.docs.map(mapDocumentToSession));
   });
@@ -104,7 +104,8 @@ function mapDocumentToSession(
     success: data.success,
     response: data.response,
     phoneNumber: data.phoneNumber,
-    dateCreated: (data.dateCreated as firestore.Timestamp).toDate()
+    dateCreated:
+      data.dateCreated && (data.dateCreated as firestore.Timestamp).toDate()
   };
   return session;
 }

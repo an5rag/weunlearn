@@ -33,7 +33,7 @@ export interface ICampaignBroadcast {
 
 export interface ISession {
   phoneNumber: string;
-  response: string;
+  response: Object;
   success: boolean;
   dateCreated: Date;
 }

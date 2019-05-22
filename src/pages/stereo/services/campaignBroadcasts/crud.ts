@@ -10,7 +10,7 @@ export async function getCampaignBroadcasts(
   const campaignBroadcastsCollectionRef = getCampaignBroadcastsRefByCampaign(
     projectId,
     campaignId
-  );
+  ).orderBy("dateCreated", "desc");
   const snapshot: firestore.QuerySnapshot = await campaignBroadcastsCollectionRef.get();
   return snapshot.docs.map(mapDocumentToCampaignBroadcast);
 }
@@ -43,7 +43,7 @@ export function getCampaignBroadcastsSubscription(
   const campaignBroadcastsCollectionRef = getCampaignBroadcastsRefByCampaign(
     projectId,
     campaignId
-  );
+  ).orderBy("dateCreated", "desc");
 
   return campaignBroadcastsCollectionRef.onSnapshot(snapshot => {
     fn(snapshot.docs.map(mapDocumentToCampaignBroadcast));

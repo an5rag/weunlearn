@@ -8,7 +8,7 @@ import {
   ICampaign,
   ISession
 } from "./firestoreDatabaseTypes";
-import console = require("console");
+import { parseString } from "xml2js";
 admin.initializeApp(functions.config().firebase);
 const db = admin.firestore();
 
@@ -35,6 +35,38 @@ export const makeExotelCall = functions.https.onCall(async () => {
     }
   );
 });
+
+export const updateSessionResponse = functions.https.onRequest(
+  async (request, response) => {
+    // find session id
+    const sessionId = request.query.sessionId;
+    console.log(request.query.sessionId);
+    if (sessionId) {
+      // find session
+      const sessionResult = await db
+        .collectionGroup("sessions")
+        .where("id", "==", sessionId)
+        .get();
+      if (sessionResult.docs.length !== 1) {
+        throw new functions.https.HttpsError(
+          "internal",
+          `Unique session couldn't be found! Length: ${
+            sessionResult.docs.length
+          }`
+        );
+      } else {
+        const session = sessionResult.docs[0].data();
+        response.send(session);
+      }
+    } else {
+      throw new functions.https.HttpsError(
+        "internal",
+        `No session id provided.`
+      );
+    }
+    response.send(request.query);
+  }
+);
 
 export const executeBroadcast = functions.https.onCall(
   async (data: {
@@ -123,24 +155,41 @@ export const executeBroadcast = functions.https.onCall(
 
     const promises = phoneNumbers.map(async phoneNumber => {
       let session: ISession;
-      return makeCall(phoneNumber, exotelLine, appId).then(
+      const documentRef = await sessionsRef.add({});
+      const callbackUrl = `https://us-central1-weunlearn-ivr-automation-45d58.cloudfunctions.net/updateSessionResponse/?sessionId=${
+        documentRef.id
+      }`;
+      return makeCall(phoneNumber, exotelLine, appId, callbackUrl).then(
         result => {
-          session = {
-            dateCreated: new Date(),
-            phoneNumber,
-            response: JSON.stringify(result.data),
-            success: true
-          };
-          sessionsRef.add(session);
+          return new Promise((resolve, reject) => {
+            parseString(result.data, async (err, parsedResult) => {
+              session = {
+                dateCreated: new Date(),
+                phoneNumber,
+                response: parsedResult,
+                success: true
+              };
+              await documentRef.update(session);
+              resolve();
+            });
+          });
         },
         e => {
-          session = {
-            dateCreated: new Date(),
-            phoneNumber,
-            response: e.response ? e.response.data : "Unknown Error",
-            success: false
-          };
-          sessionsRef.add(session);
+          return new Promise((resolve, reject) => {
+            parseString(
+              e.response ? e.response.data : "<Error>Unknown Error</Error>",
+              async (err, parsedResult) => {
+                session = {
+                  dateCreated: new Date(),
+                  phoneNumber,
+                  response: parsedResult,
+                  success: false
+                };
+                await documentRef.update(session);
+                resolve();
+              }
+            );
+          });
         }
       );
     });
