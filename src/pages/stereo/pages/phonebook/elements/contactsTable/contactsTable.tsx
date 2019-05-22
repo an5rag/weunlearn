@@ -62,7 +62,6 @@ export class ContactsTable extends React.Component<
   }
 
   private renderTable(): JSX.Element {
-    console.log(this.props);
     return (
       <div
         style={{

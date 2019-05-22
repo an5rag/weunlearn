@@ -105,6 +105,24 @@ export class DocumentConfigurer extends React.Component<
             />
           </FormField>
         );
+      case PropertyType.Select:
+        let valueOption: SelectOption | undefined =
+          (value &&
+            property.options &&
+            property.options.find(option => option.key === value)) ||
+          undefined;
+        return (
+          <FormField label={property.label} key={property.key}>
+            <Select
+              options={property.options || []}
+              value={valueOption}
+              onChange={e => onChange(e.value)}
+              labelKey="label"
+              valueKey="key"
+              placeholder={property.placeholder}
+            />
+          </FormField>
+        );
       case PropertyType.MultiSelect:
         let valueOptions: SelectOption[] = value.length
           ? value.map((value: string) => {

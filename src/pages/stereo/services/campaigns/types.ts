@@ -3,6 +3,7 @@ export interface ICampaign {
   name: string;
   description: string;
   appId: string;
+  phoneNumber: string;
 }
 
 export interface ICampaignWithId extends ICampaign {

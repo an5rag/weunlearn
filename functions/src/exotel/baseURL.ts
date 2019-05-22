@@ -1,4 +1,5 @@
-import secrets from "./secrets.json";
+import { secrets } from "./secrets";
+
 export const baseUrl = `https://${secrets.apiKey}:${secrets.apiToken}@${
   secrets.apiUrl
 }/${secrets.accountSid}/`;

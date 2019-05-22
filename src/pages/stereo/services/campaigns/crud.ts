@@ -67,9 +67,10 @@ function mapDocumentToCampaign(
   const campaign: ICampaignWithId = {
     name: data.name,
     id: document.id,
-    dateCreated: data.dateCreated,
+    dateCreated: (data.dateCreated as firestore.Timestamp).toDate(),
     description: data.description,
-    appId: data.appId
+    appId: data.appId,
+    phoneNumber: data.phoneNumber
   };
   return campaign;
 }

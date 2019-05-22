@@ -1,6 +1,7 @@
 import { firestore } from "firebase";
 import { ICampaignBroadcast, ICampaignBroadcastWithId } from "./types";
 import { getCampaignsRefByProject } from "../campaigns/crud";
+import firebase from "firebase";
 
 export async function getCampaignBroadcasts(
   projectId: string,
@@ -43,6 +44,7 @@ export function getCampaignBroadcastsSubscription(
     projectId,
     campaignId
   );
+
   return campaignBroadcastsCollectionRef.onSnapshot(snapshot => {
     fn(snapshot.docs.map(mapDocumentToCampaignBroadcast));
   });
@@ -59,6 +61,21 @@ export async function addCampaignBroadcast(
   );
   const document = await campaignBroadcastsCollectionRef.add(campaignBroadcast);
   return document.id;
+}
+export async function broadcast(
+  projectId: string,
+  campaignId: string,
+  broadcastId: string
+) {
+  const executeBroadcast = firebase
+    .functions()
+    .httpsCallable("executeBroadcast");
+
+  await executeBroadcast({
+    broadcastId,
+    campaignId,
+    projectId
+  });
 }
 
 export async function updateCampaignBroadcast(
@@ -95,13 +112,13 @@ function mapDocumentToCampaignBroadcast(
   const campaignBroadcast: ICampaignBroadcastWithId = {
     name: data.name,
     id: document.id,
-    dateStarted: data.dateStarted,
-    contactListId: data.contactListId
+    dateBroadcasted: (data.dateBroadcasted as firestore.Timestamp).toDate(),
+    contactGroupId: data.contactGroupId
   };
   return campaignBroadcast;
 }
 
-function getCampaignBroadcastsRefByCampaign(
+export function getCampaignBroadcastsRefByCampaign(
   projectId: string,
   campaignId: string
 ) {

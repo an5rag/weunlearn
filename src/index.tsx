@@ -7,6 +7,9 @@ import firebase from "firebase";
 import firebaseConfig from "./firebase.config.json";
 
 firebase.initializeApp(firebaseConfig);
+// uncomment this line in development
+// firebase.functions().useFunctionsEmulator("http://localhost:5000");
+
 ReactDOM.render(<App />, document.getElementById("root"));
 
 // If you want your app to work offline and load faster, you can change

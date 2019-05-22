@@ -1,7 +1,7 @@
 export interface ICampaignBroadcast {
-  dateStarted: Date;
+  dateBroadcasted: Date;
   name: string;
-  contactListId: string;
+  contactGroupId: string;
 }
 
 export interface ICampaignBroadcastWithId extends ICampaignBroadcast {
