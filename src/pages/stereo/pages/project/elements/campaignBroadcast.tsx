@@ -1,5 +1,5 @@
 import React from "react";
-import { Text, AccordionPanel, DataTable, Button } from "grommet";
+import { Text, AccordionPanel, DataTable, Button, Box } from "grommet";
 import { ICampaignBroadcastWithId } from "../../../services/campaignBroadcasts/types";
 import { getSessionsSubscription } from "../../../services/sessions/crud";
 import { ISession } from "../../../services/sessions/types";
@@ -75,89 +75,97 @@ export class CampaignBroadcast extends React.Component<
             {this.props.broadcasting || this.state.redeploying
               ? " (Currently broadcasting ...)"
               : ""}
-            <Button
-              onClick={async () => {
-                if (this.props.broadcasting) {
-                  return;
-                }
-                this.setState({
-                  redeploying: true
-                });
-                await broadcast(
-                  this.props.projectId,
-                  this.props.campaignId,
-                  this.props.broadcast.id
-                );
-                this.setState({
-                  redeploying: false
-                });
-              }}
-              icon={<Refresh />}
-              label="Redeploy"
-            />
           </Text>
         }
         key={this.props.broadcast.id}
       >
-        <Text>
-          <b>Broadcasted on: </b>
-          {moment(this.props.broadcast.dateBroadcasted).format(
-            "MMMM Do h:mm a"
-          )}{" "}
-          ({moment(this.props.broadcast.dateBroadcasted).fromNow()})
-        </Text>
-
-        <Text>
-          <b>Broadcasted to: </b>
-          {this.state.contactGroup ? this.state.contactGroup.name : "Loading"}
-        </Text>
-
-        {this.state.sessions ? (
-          <DataTable
-            margin="medium"
-            columns={[
-              {
-                property: "number",
-                header: <Text>Name</Text>,
-                primary: false,
-                render: (datum: ISession) =>
-                  this.state.contacts[datum.phoneNumber]
-              },
-
-              {
-                property: "phoneNumber",
-                header: "Phone Number",
-                render: (datum: ISession) => datum.phoneNumber
-              },
-              {
-                property: "success",
-                header: "Success",
-                primary: true,
-                render: (datum: ISession) => (datum.success ? "True" : "False")
-              },
-              {
-                property: "response",
-                header: "Response",
-                primary: true,
-                render: (datum: ISession) => datum.response
+        <Box gap="medium" align="start">
+          <Button
+            onClick={async () => {
+              if (this.props.broadcasting) {
+                return;
               }
-
-              // {
-              //   property: "duration",
-              //   header: "Duration",
-              //   render: (datum: ISession) =>
-              //     datum.duration
-              //       ? `${Math.floor(datum.duration / 60)}:${get2D(
-              //           datum.duration % 60
-              //         )}`
-              //       : "Unknown"
-              // }
-            ]}
-            data={this.state.sessions}
+              this.setState({
+                redeploying: true
+              });
+              await broadcast(
+                this.props.projectId,
+                this.props.campaignId,
+                this.props.broadcast.id
+              );
+              this.setState({
+                redeploying: false
+              });
+            }}
+            icon={<Refresh />}
+            disabled={this.state.redeploying || this.props.broadcasting}
+            label={
+              this.state.redeploying || this.props.broadcasting
+                ? "Deploying"
+                : "Deploy"
+            }
           />
-        ) : (
-          <>No sessions yet.</>
-        )}
+          <Text>
+            <b>Broadcasted on: </b>
+            {moment(this.props.broadcast.dateBroadcasted).format(
+              "MMMM Do h:mm a"
+            )}{" "}
+            ({moment(this.props.broadcast.dateBroadcasted).fromNow()})
+          </Text>
+
+          <Text>
+            <b>Broadcasted to: </b>
+            {this.state.contactGroup ? this.state.contactGroup.name : "Loading"}
+          </Text>
+
+          {this.state.sessions ? (
+            <DataTable
+              margin="medium"
+              columns={[
+                {
+                  property: "number",
+                  header: <Text>Name</Text>,
+                  primary: false,
+                  render: (datum: ISession) =>
+                    this.state.contacts[datum.phoneNumber]
+                },
+
+                {
+                  property: "phoneNumber",
+                  header: "Phone Number",
+                  render: (datum: ISession) => datum.phoneNumber
+                },
+                {
+                  property: "success",
+                  header: "Success",
+                  primary: true,
+                  render: (datum: ISession) =>
+                    datum.success ? "True" : "False"
+                },
+                {
+                  property: "response",
+                  header: "Response",
+                  primary: true,
+                  render: (datum: ISession) => datum.response
+                }
+
+                // {
+                //   property: "duration",
+                //   header: "Duration",
+                //   render: (datum: ISession) =>
+                //     datum.duration
+                //       ? `${Math.floor(datum.duration / 60)}:${get2D(
+                //           datum.duration % 60
+                //         )}`
+                //       : "Unknown"
+                // }
+              ]}
+              data={this.state.sessions}
+            />
+          ) : (
+            <>No sessions yet.</>
+          )}
+        </Box>
       </AccordionPanel>
     );
   }

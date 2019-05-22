@@ -4,8 +4,7 @@ import { Add } from "grommet-icons";
 import { ICampaignWithId } from "../../../services/campaigns/types";
 import {
   getCampaignBroadcastsSubscription,
-  addCampaignBroadcast,
-  broadcast
+  addCampaignBroadcast
 } from "../../../services/campaignBroadcasts/crud";
 import {
   ICampaignBroadcastWithId,
@@ -147,11 +146,6 @@ export class Campaign extends React.Component<CampaignProps, CampaignState> {
           document
         );
         this.setState({ isConfigurerOpen: false, broadcastingId: broadcastId });
-        await broadcast(
-          this.props.projectId,
-          this.props.campaign.id,
-          broadcastId
-        );
         this.setState({ broadcastingId: "" });
       },
       onUpdate: async document => {
