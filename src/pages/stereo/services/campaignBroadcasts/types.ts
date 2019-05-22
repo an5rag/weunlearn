@@ -1,5 +1,6 @@
 export interface ICampaignBroadcast {
   dateBroadcasted: Date;
+  dateCreated: Date;
   name: string;
   contactGroupId: string;
 }

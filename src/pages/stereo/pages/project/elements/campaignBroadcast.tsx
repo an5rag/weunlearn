@@ -5,7 +5,10 @@ import { getSessionsSubscription } from "../../../services/sessions/crud";
 import { ISession } from "../../../services/sessions/types";
 import moment from "moment";
 import { Refresh } from "grommet-icons";
-import { broadcast } from "../../../services/campaignBroadcasts/crud";
+import {
+  broadcast,
+  updateCampaignBroadcast
+} from "../../../services/campaignBroadcasts/crud";
 import { IContactGroup } from "../../../services/contactGroups/types";
 import { getContacts } from "../../../services/contacts/crud";
 import { getContactGroup } from "../../../services/contactGroups/crud";
@@ -14,12 +17,11 @@ export interface CampaignBroadcastProps {
   projectId: string;
   campaignId: string;
   broadcast: ICampaignBroadcastWithId;
-  broadcasting: boolean;
 }
 
 interface CampaignBroadcastState {
   sessions?: ISession[];
-  redeploying?: boolean;
+  deploying?: boolean;
   contactGroup?: IContactGroup;
   contacts: { [phone: string]: string };
 }
@@ -72,9 +74,7 @@ export class CampaignBroadcast extends React.Component<
         label={
           <Text color="neutral-3" size="medium" margin={{ vertical: "small" }}>
             {this.props.broadcast.name}
-            {this.props.broadcasting || this.state.redeploying
-              ? " (Currently broadcasting ...)"
-              : ""}
+            {this.state.deploying ? " (Currently broadcasting ...)" : ""}
           </Text>
         }
         key={this.props.broadcast.id}
@@ -82,35 +82,47 @@ export class CampaignBroadcast extends React.Component<
         <Box gap="medium" align="start">
           <Button
             onClick={async () => {
-              if (this.props.broadcasting) {
-                return;
-              }
               this.setState({
-                redeploying: true
+                deploying: true
               });
               await broadcast(
                 this.props.projectId,
                 this.props.campaignId,
                 this.props.broadcast.id
               );
+              updateCampaignBroadcast(
+                this.props.projectId,
+                this.props.campaignId,
+                this.props.broadcast.id,
+                {
+                  dateBroadcasted: new Date()
+                }
+              );
               this.setState({
-                redeploying: false
+                deploying: false
               });
             }}
             icon={<Refresh />}
-            disabled={this.state.redeploying || this.props.broadcasting}
+            disabled={this.state.deploying}
             label={
-              this.state.redeploying || this.props.broadcasting
+              this.state.deploying
                 ? "Deploying"
+                : this.props.broadcast.dateBroadcasted
+                ? "Redeploy"
                 : "Deploy"
             }
           />
           <Text>
+            <b>Created on: </b>
+            {this.props.broadcast.dateCreated
+              ? getPrettyDate(this.props.broadcast.dateCreated)
+              : ""}
+          </Text>
+          <Text>
             <b>Broadcasted on: </b>
-            {moment(this.props.broadcast.dateBroadcasted).format(
-              "MMMM Do h:mm a"
-            )}{" "}
-            ({moment(this.props.broadcast.dateBroadcasted).fromNow()})
+            {this.props.broadcast.dateBroadcasted
+              ? getPrettyDate(this.props.broadcast.dateBroadcasted)
+              : ""}
           </Text>
 
           <Text>
@@ -169,6 +181,11 @@ export class CampaignBroadcast extends React.Component<
       </AccordionPanel>
     );
   }
+}
+
+function getPrettyDate(date: Date): string {
+  return `
+  ${moment(date).format("MMMM Do h:mm a")} (${moment(date).fromNow()})`;
 }
 
 // function get2D(num: number): string {

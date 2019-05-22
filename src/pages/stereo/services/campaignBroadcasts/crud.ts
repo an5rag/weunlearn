@@ -112,7 +112,11 @@ function mapDocumentToCampaignBroadcast(
   const campaignBroadcast: ICampaignBroadcastWithId = {
     name: data.name,
     id: document.id,
-    dateBroadcasted: (data.dateBroadcasted as firestore.Timestamp).toDate(),
+    dateBroadcasted:
+      data.dateBroadcasted &&
+      (data.dateBroadcasted as firestore.Timestamp).toDate(),
+    dateCreated:
+      data.dateCreated && (data.dateCreated as firestore.Timestamp).toDate(),
     contactGroupId: data.contactGroupId
   };
   return campaignBroadcast;

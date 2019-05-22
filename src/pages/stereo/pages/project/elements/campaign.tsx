@@ -31,7 +31,6 @@ interface CampaignState {
   campaignBroadcasts?: ICampaignBroadcastWithId[];
   configurerState: ConfigurerState;
   isConfigurerOpen: boolean;
-  broadcastingId?: string;
   contactGroups?: IContactGroupWithID[];
 }
 
@@ -91,7 +90,7 @@ export class Campaign extends React.Component<CampaignProps, CampaignState> {
               {this.props.campaign.appId}
             </Text>
             <Text>
-              <b>Phone number: </b>
+              <b>Caller ID: </b>
               {this.props.campaign.phoneNumber}
             </Text>
             <Button
@@ -114,9 +113,6 @@ export class Campaign extends React.Component<CampaignProps, CampaignState> {
                       projectId={this.props.projectId}
                       campaignId={this.props.campaign.id}
                       broadcast={campaignBroadcast}
-                      broadcasting={
-                        this.state.broadcastingId === campaignBroadcast.id
-                      }
                     />
                   );
                 })
@@ -139,14 +135,13 @@ export class Campaign extends React.Component<CampaignProps, CampaignState> {
       onDismiss: () => this.setState({ isConfigurerOpen: false }),
       documentTypeName: "Broadcast",
       onAdd: async document => {
-        document.dateBroadcasted = new Date();
-        const broadcastId = await addCampaignBroadcast(
+        document.dateCreated = new Date();
+        await addCampaignBroadcast(
           this.props.projectId,
           this.props.campaign.id,
           document
         );
-        this.setState({ isConfigurerOpen: false, broadcastingId: broadcastId });
-        this.setState({ broadcastingId: "" });
+        this.setState({ isConfigurerOpen: false });
       },
       onUpdate: async document => {
         this.setState({ isConfigurerOpen: false });
