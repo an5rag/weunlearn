@@ -109,7 +109,7 @@ export const Home = () => (
             </Box>
           </Box>
         </Box>
-        <Box margin={{ vertical: "large" }} width="large">
+        <Box margin={{ vertical: "large" }} width="large" align="center">
           <Heading level="2" textAlign="center">
             Contact us
           </Heading>

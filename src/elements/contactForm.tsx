@@ -1,5 +1,13 @@
 import React from "react";
-import { ResponsiveContext, Form, FormField, Button, Box, Text } from "grommet";
+import {
+  ResponsiveContext,
+  Form,
+  FormField,
+  Button,
+  Box,
+  Text,
+  Paragraph
+} from "grommet";
 export interface ContactFormState {
   formSubmitted: boolean;
 }
@@ -8,7 +16,7 @@ export class ContactForm extends React.Component<{}, ContactFormState> {
     formSubmitted: false
   };
   render() {
-    return (
+    const form = (
       <ResponsiveContext.Consumer>
         {size =>
           !this.state.formSubmitted ? (
@@ -16,7 +24,7 @@ export class ContactForm extends React.Component<{}, ContactFormState> {
               name="contact"
               method="POST"
               data-netlify="true"
-              onSubmit={() => this.setState({formSubmitted: true})}
+              onSubmit={() => this.setState({ formSubmitted: true })}
             >
               <input type="hidden" name="form-name" value="contact" />
               <FormField name="name" label="Name" />
@@ -38,6 +46,15 @@ export class ContactForm extends React.Component<{}, ContactFormState> {
           )
         }
       </ResponsiveContext.Consumer>
+    );
+    return (
+      <>
+        {false ? form : <></>}
+        <Paragraph size="medium" textAlign="center" color="black">
+          Write to us at <b>contact@weunlearn.org </b>and we'll be in touch
+          soon.
+        </Paragraph>
+      </>
     );
   }
 }
