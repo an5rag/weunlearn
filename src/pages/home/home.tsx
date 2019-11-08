@@ -38,22 +38,6 @@ export const Home = () => (
             }}
           />
         </Box>
-        <Box width="100%" align="center">
-          <Box direction="row" width="100%" justify="around">
-            <Box>
-              <Heading color="brand" level="2" textAlign="center">
-                5
-              </Heading>
-              <Text textAlign="center">SCHOOLS</Text>
-            </Box>
-            <Box>
-              <Heading color="brand" level="2" textAlign="center">
-                270
-              </Heading>
-              <Text textAlign="center">STUDENTS</Text>
-            </Box>
-          </Box>
-        </Box>
         <Box width="100%" align="center" justify="center" gap="large">
           <Heading level="2" textAlign="center">
             Our Pillars
